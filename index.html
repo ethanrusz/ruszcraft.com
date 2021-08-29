@@ -24,13 +24,35 @@
 </div>
 
 <div class="content">
-    <h1>ruszcraft</h1>
-    <hr>
-    <p>You've reached the ruszcraft server landing page.</p>
-    <p>Are you sure you want to be here?</p>
+    <div class="message">
+        <h1>ruszcraft</h1>
+        <hr>
+        <p>You've reached the ruszcraft server landing page.</p>
+        <p>Are you sure you want to be here?</p>
+    </div>
+    <div id="server-status">
+        <h2>status</h2>
+        <hr>
+        <p>
+            The <span class="server-name">apartment</span> server is currently
+            <span class="apt-server-online"></span>!
+        </p>
+    </div>
 </div>
 
-<script src="js/main.js"></script>
+<script src="https://mcapi.us/scripts/minecraft.min.js"></script>
+<script>
+    MinecraftAPI.getServerStatus('apt.ruszcraft.com', {
+        port: 25565
+    }, function (err, status) {
+        if (err) {
+            return document.querySelector('#server-status').innerHTML = 'Error loading status';
+        }
+        document.querySelector('.apt-server-online').innerHTML = status.online ? 'up' : 'down';
+        document.querySelector('.apt-server-online').style.color = status.online ? 'green' : 'red';
+    });
+</script>
+
 </body>
 
 </html>
